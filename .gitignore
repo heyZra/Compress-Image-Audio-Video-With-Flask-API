@@ -2,7 +2,7 @@
 frontend/node_modules
 frontend/dist
 frontend/dist-ssr
-frontend/video-demo
+frontend/video
 frontend/*.local
 
 # Editor directories and files
