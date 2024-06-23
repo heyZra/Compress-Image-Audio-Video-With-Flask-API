@@ -13,8 +13,8 @@ const CompressImage = ({
     // Setelah mengubah kualitas, simpan ke parent dengan log
     saveToParent(quality, `compressed image: ${quality}%`);
     const responseData = {
-      originalName: [image.fileName],
-      compressedName: ["compressed-file.jpg"],
+      originalName: [image.name],
+      compressedName: [`compressed_${image.name}.jpg`],
       originalSize: [image.size],
       compressedSize: [(image.size * quality) / 100],
     };
@@ -25,7 +25,11 @@ const CompressImage = ({
   };
 
   const handleQualityChange = (event) => {
-    setQuality(event.target.value);
+    let value = event.target.value;
+    if (value > 100) {
+      value = 100;
+    }
+    setQuality(value);
   };
 
   return (

@@ -1,14 +1,31 @@
 import { useState } from "react";
 
-const CompressAudio = ({ percentageAudio, onClose, saveToParent }) => {
+const CompressAudio = ({
+  percentageAudio,
+  onClose,
+  saveToParent,
+  music,
+  dataResponse,
+}) => {
   const [percentage, setPercentage] = useState(percentageAudio);
   const clickSave = () => {
     saveToParent(percentage, `compressed audio: ${percentage}%`);
+    const responseData = {
+      originalName: [music.name],
+      compressedName: [`compressed_${music.name}.jpg`],
+      originalSize: [music.size],
+      compressedSize: [(music.size * percentage) / 100],
+    };
+    dataResponse(responseData, "succed update size");
     onClose();
     console.log(percentage);
   };
   const handlePercentage = (event) => {
-    setPercentage(event.target.value);
+    let value = event.target.value;
+    if (value > 100) {
+      value = 100;
+    }
+    setPercentage(value);
   };
   return (
     <>

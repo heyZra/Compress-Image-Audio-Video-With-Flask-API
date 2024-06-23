@@ -432,6 +432,8 @@ const App = () => {
                       onClose={handleClose}
                       percentageAudio={percentageAudio}
                       saveToParent={handleSavedPercentageAudio}
+                      dataResponse={handleResponseApi}
+                      music={music}
                     />
                   )}
                 </>
