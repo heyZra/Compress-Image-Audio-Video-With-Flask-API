@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio and Video Compression</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
+    <!-- Google font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>Upload Media File to Compress</h1>
+        <form method="post" enctype="multipart/form-data">
+            <div class="file-input">
+                <input type="file" name="file" id="file">
+                <label for="file">Choose a file</label>
+                <span id="file-name">No file chosen</span>
+                <button type="button" id="remove-file" onclick="removeFile()" style="display:none;">Remove file</button>
+            </div>
+            <div class="compression-type">
+                <label for="compression_type">Choose Compression Type:</label>
+                <select name="compression_type" id="compression_type">
+                    <option value="mp3">MP3 (Downsampling)</option>
+                    <option value="m4a">M4A (AAC via subprocess)</option>
+                    <option value="mp4">MP4 (Codec Video H.264)</option>
+                    <option value="image">Image (JPEG Compression)</option>
+                </select>
+            </div>
+            <input type="submit" value="Upload" class="btn">
+        </form>
+        {% if filename %}
+        <h2>Download Compressed File</h2>
+        <a href="{{ url_for('download_file', filename=filename) }}" class="btn download-btn">Download {{ filename }}</a>
+        {% endif %}
+    </div>
+    <script src="{{ url_for('static', filename='scripts.js') }}"></script>
+</body>
+</html>

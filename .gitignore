@@ -1,0 +1,20 @@
+# Ignore node_modules and build artifacts in frontend
+frontend/node_modules
+frontend/dist
+frontend/dist-ssr
+frontend/video-demo
+frontend/*.local
+
+# Editor directories and files
+frontend/.vscode/*
+!frontend/.vscode/extensions.json
+frontend/.idea
+frontend/.DS_Store
+frontend/*.suo
+frontend/*.ntvs*
+frontend/*.njsproj
+frontend/*.sln
+frontend/*.sw?
+
+# For Backend
+backend/venv
