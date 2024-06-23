@@ -7,8 +7,9 @@
 1. **Create Virtual Environment**:
 
    - **Access Folder**:
-     `cd backend
-    `
+     ```cmd
+     cd backend
+     ```
    - **Windows**:
      ```cmd
      python -m venv venv
@@ -47,14 +48,14 @@ pip install -r requirements.txt
 ### Install Dependencies
 
 1. **Access Folder**:
-   ```cd frontend
-
+   ```cmd
+   cd frontend
    ```
 2. **run command**:
-   ```npm install
-
+   ```cmd
+   npm install
    ```
 3. **running program**:
-   ```npm run dev
-
+   ```cmd
+   npm run dev
    ```
