@@ -1,4 +1,5 @@
 import { useState } from "react";
+import handleImages from "../utils/handleImages";
 
 const CompressImage = ({
   qualityParent,
@@ -6,22 +7,31 @@ const CompressImage = ({
   saveToParent,
   dataResponse,
   image,
+  file,
+  height,
+  width,
+  rotate,
 }) => {
   const [quality, setQuality] = useState(qualityParent);
 
   const clickSave = () => {
     // Setelah mengubah kualitas, simpan ke parent dengan log
-    saveToParent(quality, `compressed image: ${quality}%`);
-    const responseData = {
-      originalName: [image.name],
-      compressedName: [`compressed_${image.name}.jpg`],
-      originalSize: [image.size],
-      compressedSize: [(image.size * quality) / 100],
-    };
-
-    // Panggil dataResponse dengan responseData yang sudah ada
-    dataResponse(responseData, "succeed update size");
-    // Panggil canvasToBlob untuk membuat blob dan mendapatkan responseData
+    saveToParent(quality);
+    handleImages({
+      image,
+      file,
+      width,
+      height,
+      quality,
+      rotate,
+      download: false,
+    }).then((response) => {
+      dataResponse(
+        response,
+        `compressed ${file.type} with api succed ${response.compressionTime}s`
+      );
+      // console.log(response);
+    });
   };
 
   const handleQualityChange = (event) => {

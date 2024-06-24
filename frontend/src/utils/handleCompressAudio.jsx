@@ -75,7 +75,7 @@ const handleCompressAudio = async ({ music, download }) => {
     const endTime = performance.now(); // Catat waktu selesai
     const compressionTime = (endTime - startTime) / 1000; // Hitung waktu kompresi dalam detik
 
-    console.log(compressionTime);
+    // console.log(compressionTime);
     return {
       originalName: [music.name],
       compressedName: [`compressed_${music.name}.mp3`], // Ubah ekstensi sesuai dengan file audio

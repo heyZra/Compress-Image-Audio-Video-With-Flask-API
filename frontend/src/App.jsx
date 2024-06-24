@@ -147,19 +147,16 @@ const App = () => {
     setAlgorithm(algorithm);
     console.log(algorithm);
   };
-  const handleSaveWidthHeight = (width, height, log) => {
+  const handleSaveWidthHeight = (width, height) => {
     setWidthImage(width);
     setHeightImage(height);
-    logArray.push(log);
     console.log(widthImage, heightImage, "app");
   };
-  const handleSavedQuality = (quality, log) => {
+  const handleSavedQuality = (quality) => {
     setQuality(quality);
-    logArray.push(log);
     console.log(quality);
   };
-  const handleSavedRotate = (deg, log) => {
-    logArray.push(log);
+  const handleSavedRotate = (deg) => {
     setRotate(deg);
     console.log(rotate);
   };
@@ -195,7 +192,15 @@ const App = () => {
   const clickDownload = () => {
     if (imageBlob !== null && imageBlob !== undefined) {
       if (algorithm === "1. Algorithm Using CSS") {
-        handleImages(imageBlob, widthImage, heightImage, quality, rotate);
+        handleImages({
+          image: imageBlob,
+          file: image,
+          width: widthImage,
+          height: heightImage,
+          quality,
+          rotate,
+          download: true,
+        });
       } else {
         handleDownload(responseApi);
       }
@@ -350,7 +355,7 @@ const App = () => {
                       ? "image/jpg, image/jpeg, image/png"
                       : isMusicMode
                       ? "audio/mp3"
-                      : "video/mp4, video/m4a"
+                      : "video/mp4, audio/m4a"
                   }
                   className="hidden"
                 />
@@ -394,7 +399,11 @@ const App = () => {
                       onClose={handleClose}
                       saveToParent={handleSavedQuality}
                       dataResponse={handleResponseApi}
-                      image={image}
+                      image={imageBlob}
+                      file={image}
+                      height={heightImage}
+                      width={widthImage}
+                      rotate={rotate}
                     />
                   )}
                   {menu === "rotate" && (

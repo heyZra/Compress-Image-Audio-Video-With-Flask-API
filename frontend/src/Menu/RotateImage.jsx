@@ -4,7 +4,7 @@ const RotateImage = ({ parentRotate, onClose, saveToParent }) => {
   const [rotate, setRotate] = useState(parentRotate);
 
   const clickSave = () => {
-    saveToParent(parseInt(rotate), `rotated image: ${rotate}deg`);
+    saveToParent(parseInt(rotate));
     onClose();
     console.log(rotate);
   };

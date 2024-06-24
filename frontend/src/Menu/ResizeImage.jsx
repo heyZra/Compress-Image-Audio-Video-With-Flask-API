@@ -22,11 +22,7 @@ const ResizeImage = ({ height, width, onClose, image, saveToParent }) => {
   };
 
   const clickSave = () => {
-    saveToParent(
-      inputWidth,
-      inputHeight,
-      `resized image: ${inputWidth}, ${inputHeight}`
-    ); // Corrected syntax
+    saveToParent(inputWidth, inputHeight); // Corrected syntax
     onClose();
   };
   return (
