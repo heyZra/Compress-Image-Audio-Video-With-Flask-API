@@ -163,16 +163,9 @@ const App = () => {
     setRotate(deg);
     console.log(rotate);
   };
-  const handleSavedPercentageAudio = (percentage, log) => {
-    logArray.push(log);
-    setPercentageAudio(percentage);
-    console.log(percentage);
-  };
   const handleResponseApi = async (response, log) => {
     logArray.push(log);
     setResponseApi(response);
-    // console.log(response);
-    // console.log(responseApi);
   };
   useEffect(() => {
     console.log(responseApi); // Log nilai responseApi yang diperbarui
@@ -209,7 +202,7 @@ const App = () => {
       console.log("download image");
     } else if (music !== null && music !== undefined) {
       if (algorithm === "1. Algorithm Using JS (.mp3)") {
-        handleCompressAudio({ music, percentageAudio });
+        handleCompressAudio({ music, download: true });
       } else {
         handleDownload(responseApi);
       }
@@ -431,8 +424,6 @@ const App = () => {
                   {menu === "compress-audio" && (
                     <CompressAudio
                       onClose={handleClose}
-                      percentageAudio={percentageAudio}
-                      saveToParent={handleSavedPercentageAudio}
                       dataResponse={handleResponseApi}
                       music={music}
                     />

@@ -3,7 +3,10 @@ import requestApi from "../utils/requestAPI";
 const CompressWithApi = ({ onClose, type, file, saveToParent }) => {
   const clickSave = () => {
     requestApi(type, file).then((response) => {
-      saveToParent(response, `compressed with api succed`);
+      saveToParent(
+        response,
+        `compressed ${file.type} with api succed ${response.compressionTime}s`
+      );
     });
     console.log("req api succed");
     onClose();

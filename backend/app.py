@@ -8,6 +8,7 @@ import logging
 from PIL import Image
 import glob
 from flask_cors import CORS, cross_origin
+import time
 
 app = Flask(__name__)
 CORS(app)
@@ -73,6 +74,8 @@ def compress_image(file_path):
     file_extension = os.path.splitext(file_name)[1].lower()
     compressed_image_path = os.path.join(app.config['COMPRESSED_FOLDER'], nameCompressed)
     
+    start_time = time.time()  # Mulai pengukuran waktu
+
     with Image.open(file_path) as img:
         if file_extension in ['.png', '.jpeg', '.jpg']:
             img = img.convert("RGB")  # Convert to RGB mode
@@ -80,16 +83,22 @@ def compress_image(file_path):
         else:
             raise ValueError(f"Unsupported file extension: {file_extension}")
     
+    end_time = time.time()  # Akhiri pengukuran waktu
+
+    # Hitung waktu kompresi
+    compression_time = end_time - start_time
+    
     # Get original and compressed file sizes
-    original_size = os.path.getsize(file_path)/1024 #KB
-    compressed_size = os.path.getsize(compressed_image_path)/1024 #KB
+    original_size = os.path.getsize(file_path) / 1024  # KB
+    compressed_size = os.path.getsize(compressed_image_path) / 1024  # KB
     
     json_obj = {
         "url": [f"/static/compressed/{nameCompressed}"],
         "originalName": [file_name],
-        "originalSize": [round(original_size,2)],
+        "originalSize": [round(original_size, 2)],
         "compressedName": [nameCompressed],
-        "compressedSize": [round(compressed_size,2)],
+        "compressedSize": [round(compressed_size, 2)],
+        "compressionTime": [round(compression_time, 2)]  # Menambahkan waktu kompresi
     }
     return json_obj
 
@@ -102,6 +111,8 @@ def compress_to_mp3(file_path):
     name_compressed = f'compressed_{file_name.lower()}'
     compressed_mp3_path = os.path.join(app.config['COMPRESSED_FOLDER'], name_compressed + ".mp3")
     compressed_wav_path = os.path.join(app.config['COMPRESSED_FOLDER'], name_compressed + ".wav")
+
+    start_time = time.time()  # Mulai pengukuran waktu
 
     # Jika berkas adalah MP3, konversi ke WAV terlebih dahulu
     if file_extension == '.mp3':
@@ -141,6 +152,11 @@ def compress_to_mp3(file_path):
     audio_compressed = AudioSegment.from_wav(compressed_wav_path)
     audio_compressed.export(compressed_mp3_path, format="mp3")
 
+    end_time = time.time()  # Akhiri pengukuran waktu
+
+    # Hitung waktu kompresi
+    compression_time = end_time - start_time
+
     # Hitung ukuran file dalam kilobyte (KB)
     original_size_mp3 = os.path.getsize(file_path) / 1024  # KB
     original_size_wav = os.path.getsize(wav_file_path) / 1024  # KB
@@ -154,11 +170,13 @@ def compress_to_mp3(file_path):
         "originalSize": [round(original_size_mp3,2), round(original_size_wav,2)],
         "compressedName": [f"{name_compressed}.mp3", f"{name_compressed}.wav"],
         "compressedSize": [round(compressed_size_mp3,2), round(compressed_size_wav,2)],
+        "compressionTime": [round(compression_time, 2)]  # Menambahkan waktu kompresi
     }
     return json_obj
 
 def compress_to_m4a(file_path):
     try:
+        start_time = time.time()  # Mulai pengukuran waktu
         compressed_m4a_path = os.path.join(app.config['COMPRESSED_FOLDER'], 'compressed.m4a')
         command = f"ffmpeg -y -i \"{file_path}\" -map 0:a:0 -b:a 24k -c:a aac -vn \"{compressed_m4a_path}\""
         result = sp.run(command, shell=True, stdout=sp.PIPE, stderr=sp.PIPE)
@@ -168,12 +186,15 @@ def compress_to_m4a(file_path):
             original_size = os.path.getsize(file_path) / 1024  # KB
             compressed_size = os.path.getsize(compressed_m4a_path) / 1024  # KB
             
+            end_time = time.time()
+            compression_time = end_time - start_time
             json_obj = {
                 "url": [f"/static/compressed/compressed.m4a"],
                 "originalName": [os.path.basename(file_path)],
                 "originalSize": [round(original_size, 2)],
                 "compressedName": ["compressed.m4a"],
                 "compressedSize": [round(compressed_size, 2)],
+                "compressionTime": [round(compression_time, 2)]  # Menambahkan waktu kompresi
             }
             logging.info("Compression successful.")
             return json_obj
@@ -188,6 +209,7 @@ def compress_to_m4a(file_path):
 
 def compress_to_mp4(file_path):
     try:
+        start_time = time.time()
         compressed_mp4_path = os.path.join(app.config['COMPRESSED_FOLDER'], 'compressed.mp4')
         command = [
             'ffmpeg', '-y', '-i', file_path, 
@@ -204,12 +226,15 @@ def compress_to_mp4(file_path):
             original_size = os.path.getsize(file_path) / 1024  # KB
             compressed_size = os.path.getsize(compressed_mp4_path) / 1024  # KB
             
+            end_time = time.time()
+            compression_time = end_time-start_time
             json_obj = {
                 "url": [f"/static/compressed/compressed.mp4"],
                 "originalName": [os.path.basename(file_path)],
                 "originalSize": [round(original_size, 2)],
                 "compressedName": ["compressed.mp4"],
                 "compressedSize": [round(compressed_size, 2)],
+                "compressionTime": [round(compression_time, 2)]  # Menambahkan waktu kompresi
             }
             logging.info("Compression successful.")
             return json_obj
