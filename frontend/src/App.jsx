@@ -103,6 +103,7 @@ const App = () => {
     setWidthImage(null);
     setImage(null);
     setMusic(null);
+    setVideo(null);
     setMenu(null);
     setImageBlob(null);
     setQuality(100);
