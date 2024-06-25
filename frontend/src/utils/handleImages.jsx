@@ -44,11 +44,11 @@ const handleImages = async ({
     const endTime = performance.now(); // Catat waktu selesai
     const compressionTime = (endTime - startTime) / 1000; // Hitung waktu kompresi dalam detik
     return {
-      originalName: file.name,
-      compressedName: `compressed_${file.name}.jpeg`, // Nama file terkompresi
-      originalSize: file.size / 1024, // Ukuran file asli dalam KB
-      compressedSize: fileSizeInBytes / 1024, // Ukuran file terkompresi dalam KB
-      compressionTime: compressionTime.toFixed(2), // Waktu kompresi dalam detik
+      originalName: [file.name],
+      compressedName: [`compressed_${file.name}.jpeg`], // Nama file terkompresi
+      originalSize: [file.size / 1024], // Ukuran file asli dalam KB
+      compressedSize: [fileSizeInBytes / 1024], // Ukuran file terkompresi dalam KB
+      compressionTime: [compressionTime.toFixed(2)], // Waktu kompresi dalam detik
     };
   } catch (error) {
     console.error("Error measuring compressed size:", error);
