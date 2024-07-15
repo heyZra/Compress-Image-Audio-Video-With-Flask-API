@@ -32,17 +32,17 @@
      ```bash
      source venv/bin/activate
      ```
-3. **Running Program**:
+
+3. **Install Requirements**:
+   
+   Install required Python packages within the activated virtual environment.
+   
+   ```bash
+   pip install -r requirements.txt
+   ```
+4. **Running Program**:
    python app.py
-
-### Install Requirements
-
-Install required Python packages within the activated virtual environment.
-
-```bash
-pip install -r requirements.txt
-```
-
+   
 ## Frontend
 
 ### Install Dependencies
